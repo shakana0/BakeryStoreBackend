@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Exceptions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -19,7 +20,7 @@ namespace Application.BakeryProduct.Commands.DeleteBakeryProduct
 			var bakeryProduct = await _bakeryStoreDbContext.Products.FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken); // getting the product from the database context.
 			if (bakeryProduct == null)
 			{
-				throw new Exception("Product not found");
+				throw new NotFoundException("Product", $"{request.Id}");
 			}
 
 			_bakeryStoreDbContext.Products.Remove(bakeryProduct);

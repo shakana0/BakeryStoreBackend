@@ -1,4 +1,5 @@
 ﻿using Application.BakeryProduct.Queries.ViewModels;
+using Application.Exceptions;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +23,7 @@ namespace Application.BakeryProduct.Queries.GetBakeryProduct
 			var bakeryProduct = await _bakeryStoreDbContext.Products.FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken); // getting the product from the database context.
 			if (bakeryProduct == null) // if the product is not found, throw an exception.
 			{
-				throw new Exception("Product not found");
-				//throw new NotFoundException("Product", $"{request.Id}");
+				throw new NotFoundException("Product", $"{request.Id}");
 
 			}
 			return _mapper.Map<BakeryProductViewModel>(bakeryProduct);

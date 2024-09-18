@@ -1,4 +1,5 @@
 ﻿using Application.BakeryProduct.Queries.ViewModels;
+using Application.Exceptions;
 using AutoMapper;
 using Domain;
 using MediatR;
@@ -23,7 +24,7 @@ namespace Application.BakeryProduct.Commands.UpdateBakeryProduct
 			var bakeryProduct = await _bakeryStoreDbContext.Products.FirstOrDefaultAsync(Product => Product.Id == request.Id);
 			if (bakeryProduct == null)
 			{
-				throw new Exception("Could not find bakery product");
+				throw new NotFoundException("Product", $"{request.Id}");
 			}
 
 			if (!string.IsNullOrWhiteSpace(request.Name))
