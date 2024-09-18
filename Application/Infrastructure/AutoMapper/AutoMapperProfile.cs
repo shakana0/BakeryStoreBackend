@@ -1,4 +1,5 @@
 ﻿using Application.BakeryProduct.Commands.CreateBakeryProduct;
+using Application.BakeryProduct.Commands.UpdateBakeryProduct;
 using Application.BakeryProduct.Queries.ViewModels;
 using AutoMapper;
 using Domain;
@@ -15,9 +16,7 @@ namespace Application.Infrastructure.AutoMapper
 			CreateMap<Product, BakeryProductViewModel>();
 			//.ConstructUsing(source => new BakeryProductViewModel(source));
 
-			//CreateMap<UpdateBakeryProductCommands, EmergencyMessage>();
-			//CreateMap<EmergencyMessage, EmergencyMessageViewModel>()
-			//	.ConstructUsing(source => new EmergencyMessageViewModel(source));
+			CreateMap<UpdateBakeryProductCommand, Product>();
 		}
 	}
 }

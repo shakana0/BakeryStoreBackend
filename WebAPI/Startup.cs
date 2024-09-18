@@ -1,5 +1,5 @@
 ﻿using Application;
-using Application.BakeryProduct.Commands.CreateBakeryProduct;
+using Application.BakeryProduct.Commands.UpdateBakeryProduct;
 using Asp.Versioning;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -13,10 +13,8 @@ namespace WebAPI
 {
 	public class Startup
 	{
-		// define the configuration property
 		public IConfiguration Configuration { get; }
 
-		// define the constructor
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
@@ -35,7 +33,7 @@ namespace WebAPI
 			services.AddEndpointsApiExplorer(); // To register services that provide metadata about your API endpoints and is needed for the OpenAPI document
 												// Adding MediatR to the service collection  
 												//RegisterServicesFromAssemblies to scan the specified assemblies for handlers, requests, and other MediatR-related services.
-			services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateBakeryProductHandler).Assembly));
+			services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(UpdateBakeryProductCommand).Assembly));
 			//Adding a versioning service to the service collection
 			var apiVersioningBuilder = services.AddApiVersioning(o =>
 			{

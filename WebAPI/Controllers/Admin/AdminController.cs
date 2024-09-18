@@ -1,4 +1,5 @@
 ﻿using Application.BakeryProduct.Commands.CreateBakeryProduct;
+using Application.BakeryProduct.Commands.UpdateBakeryProduct;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.Admin
@@ -16,7 +17,13 @@ namespace WebAPI.Controllers.Admin
 			return Ok(await Mediator.Send(command));
 		}
 
-		//[HttpGet("{id}")]
-
+		[HttpPatch("BakeryProduct/{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult<int>> UpdateBakeryProduct(int id, UpdateBakeryProductCommand command)
+		{
+			command.SetBakeryProductId(id);
+			return Ok(await Mediator.Send(command));
+		}
 	}
 }
