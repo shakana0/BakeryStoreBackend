@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BakeryProduct\Commands\DeleteBakeryProduct\" />
     <Folder Include="BakeryProduct\Queries\SearchBakeryProduct\" />
   </ItemGroup>
 

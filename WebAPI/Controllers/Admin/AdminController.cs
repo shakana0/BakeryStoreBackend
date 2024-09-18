@@ -1,11 +1,23 @@
 ﻿using Application.BakeryProduct.Commands.CreateBakeryProduct;
+using Application.BakeryProduct.Commands.DeleteBakeryProduct;
 using Application.BakeryProduct.Commands.UpdateBakeryProduct;
+using Application.BakeryProduct.Queries.GetBakeryProduct;
+using Application.BakeryProduct.Queries.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.Admin
 {
 	public class AdminController : BaseController
 	{
+		[HttpGet("{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<BakeryProductViewModel>> GetEmergencyMessage(int id)
+		{
+			return Ok(await Mediator.Send(new GetBakeryProductQuery() { Id = id }));
+		}
+
 		[HttpPost("BakeryProduct")] // attribute specifies that this method will handle HTTP POST requests sent to the BakeryProduct endpoint.
 		[Produces("application/json")] //attribute indicates that this method will return JSON-formatted responses.
 		[ProducesResponseType(StatusCodes.Status200OK)]
@@ -24,6 +36,14 @@ namespace WebAPI.Controllers.Admin
 		{
 			command.SetBakeryProductId(id);
 			return Ok(await Mediator.Send(command));
+		}
+
+		[HttpDelete("BakeryProduct/{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult<int>> DeleteBakeryProduct(int id, DeleteBakeryProductCommand command)
+		{
+			return Ok(await Mediator.Send(new DeleteBakeryProductCommand() { Id = id }));
 		}
 	}
 }
