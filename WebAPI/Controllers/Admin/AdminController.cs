@@ -2,7 +2,9 @@
 using Application.BakeryProduct.Commands.DeleteBakeryProduct;
 using Application.BakeryProduct.Commands.UpdateBakeryProduct;
 using Application.BakeryProduct.Queries.GetBakeryProduct;
+using Application.BakeryProduct.Queries.SearchBakeryProduct;
 using Application.BakeryProduct.Queries.ViewModels;
+using Application.Common.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.Admin
@@ -44,6 +46,15 @@ namespace WebAPI.Controllers.Admin
 		public async Task<ActionResult<int>> DeleteBakeryProduct(int id, DeleteBakeryProductCommand command)
 		{
 			return Ok(await Mediator.Send(new DeleteBakeryProductCommand() { Id = id }));
+		}
+
+		[HttpGet("EmergencyMessage/search")]
+		[Produces("application/json")]
+		[ProducesResponseType(200, Type = typeof(PagedResponseViewModel<BakeryProductViewModel>))]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<IActionResult> SearchEmergencyMessage([FromQuery] SearchBakeryProductQuery command)
+		{
+			return Ok(await Mediator.Send(command));
 		}
 	}
 }
