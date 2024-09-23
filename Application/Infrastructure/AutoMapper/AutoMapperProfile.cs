@@ -13,8 +13,8 @@ namespace Application.Infrastructure.AutoMapper
 		{
 			CreateMap<CreateBakeryProductCommand, Product>()
 							.ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
-			CreateMap<Product, BakeryProductViewModel>();
-			//.ConstructUsing(source => new BakeryProductViewModel(source));
+			CreateMap<Product, BakeryProductViewModel>()
+			.ConstructUsing(source => new BakeryProductViewModel(source));
 
 			CreateMap<UpdateBakeryProductCommand, Product>();
 		}
