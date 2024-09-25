@@ -11,11 +11,11 @@ namespace WebAPI.Controllers.Admin
 {
 	public class AdminController : BaseController
 	{
-		[HttpGet("{id}")]
+		[HttpGet("BakeryProduct/{id}")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<BakeryProductViewModel>> GetEmergencyMessage(int id)
+		public async Task<ActionResult<BakeryProductViewModel>> GetBakeryProduct(int id)
 		{
 			return Ok(await Mediator.Send(new GetBakeryProductQuery() { Id = id }));
 		}
@@ -43,16 +43,16 @@ namespace WebAPI.Controllers.Admin
 		[HttpDelete("BakeryProduct/{id}")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<ActionResult<int>> DeleteBakeryProduct(int id, DeleteBakeryProductCommand command)
+		public async Task<ActionResult<int>> DeleteBakeryProduct(int id)
 		{
 			return Ok(await Mediator.Send(new DeleteBakeryProductCommand() { Id = id }));
 		}
 
-		[HttpGet("EmergencyMessage/search")]
+		[HttpGet("BakeryProduct/search")]
 		[Produces("application/json")]
 		[ProducesResponseType(200, Type = typeof(PagedResponseViewModel<BakeryProductViewModel>))]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<IActionResult> SearchEmergencyMessage([FromQuery] SearchBakeryProductQuery command)
+		public async Task<IActionResult> SearchBakeryProduct([FromQuery] SearchBakeryProductQuery command)
 		{
 			return Ok(await Mediator.Send(command));
 		}

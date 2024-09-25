@@ -6,11 +6,11 @@ namespace WebAPI.Controllers
 {
 	public class ProductController : BaseController
 	{
-		[HttpGet("{id}")]
+		[HttpGet("BakeryProduct/{id}")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<BakeryProductViewModel>> GetEmergencyMessage(int id)
+		public async Task<ActionResult<BakeryProductViewModel>> GetBakeryProduct(int id)
 		{
 			return Ok(await Mediator.Send(new GetBakeryProductQuery() { Id = id }));
 		}
