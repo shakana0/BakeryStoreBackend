@@ -1,7 +1,6 @@
 using Autofac.Extensions.DependencyInjection;
-using WebAPI;
 
-namespace FloralEcommerceShop.API
+namespace WebAPI
 {
 	public class Program
 	{
@@ -15,8 +14,8 @@ namespace FloralEcommerceShop.API
 				.UseServiceProviderFactory(new AutofacServiceProviderFactory()) //Specifies that Autofac will be used as the dependency injection container.
 			.ConfigureWebHostDefaults(webBuilder =>
 			{
-				webBuilder.UseStartup<Startup>(); //Configures the web host with default settings and specifies Startup as the class that will configure the application’s services and request pipeline.
-			}).ConfigureAppConfiguration((context, configuration) => //Configures the application’s configuration settings.
+				webBuilder.UseStartup<Startup>(); //Configures the web host with default settings and specifies Startup as the class that will configure the applicationï¿½s services and request pipeline.
+			}).ConfigureAppConfiguration((context, configuration) => //Configures the applicationï¿½s configuration settings.
 			{
 				//configuration.AddAzureKeyVaultAppSettings();
 			});

@@ -24,7 +24,8 @@ namespace WebAPI
 		{
 			// Register the application services
 			services.RegisterApplicationServices(Configuration);
-			// Register the database context
+			services.AddAutofac(); // Ensure Autofac is registered
+								   // Register the database context
 			services.AddDbContext<BakeryStoreDbContext>(options =>
 			{
 				options.UseSqlServer(Configuration.GetConnectionString("BakeryStoreDb"));
@@ -61,6 +62,16 @@ namespace WebAPI
 				app.UseHsts(); // middleware that adds the Strict-Transport-Security header to the response, only allowing HTTPS connections
 				app.UseHttpsRedirection(); // middleware that redirects HTTP requests to HTTPS
 			}
+
+			// Ensure Database is created & apply migrations
+			using (var scope = app.ApplicationServices.CreateScope())
+			{
+				var dbContext = scope.ServiceProvider.GetRequiredService<BakeryStoreDbContext>();
+				dbContext.Database.Migrate(); // Ensures DB is created
+											  // Call the helper method to create the scripts
+				SqlScriptRunner.ExecuteDatabaseScripts(dbContext);
+			}
+
 			// Adding the Autofac container to the app so that it can manage dependencies between classes
 			AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
@@ -73,6 +84,6 @@ namespace WebAPI
 				endpoints.MapControllers();
 			});
 		}
-		public ILifetimeScope AutofacContainer { get; private set; }
+		public ILifetimeScope? AutofacContainer { get; private set; }
 	}
 }
