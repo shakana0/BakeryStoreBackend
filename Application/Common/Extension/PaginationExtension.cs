@@ -7,14 +7,20 @@ namespace Application.Common.Extension
 	{
 		public static async Task<PagedResponseViewModel<T>> GetPagedAsync<T>(this IQueryable<T> query, int pageNumber, int pageSize, CancellationToken cancellationToken) where T : class
 		{
-			if (pageNumber < 1) pageNumber = 1;
-			if (pageSize < 1) pageSize = 1;
+			//Ensure valid page numbers
+			pageNumber = Math.Max(pageNumber, 1);
+			pageSize = Math.Max(pageSize, 10); // Default to 10 if invalid
 
-			var result = new PagedResponseViewModel<T>(query.Count(), pageNumber, pageSize);
-			var skip = (result.CurrentPage - 1) * result.PageSize;
-			result.Results = await query.Skip(skip).Take(pageSize).ToListAsync<T>(cancellationToken);
+			//Efficiently count records
+			var totalRecords = await query.CountAsync(cancellationToken);
 
-			return result;
+			//Calculate pagination
+			var skip = (pageNumber - 1) * pageSize;
+			var items = await query.Skip(skip).Take(pageSize).ToListAsync(cancellationToken);
+
+			//Return paginated result
+			return new PagedResponseViewModel<T>(totalRecords, pageNumber, pageSize, items);
 		}
 	}
 }
+

@@ -8,9 +8,9 @@
 		{
 			Results = new List<T>();
 		}
-		public PagedResponseViewModel(int totalRecords, int pageNumer, int pageSize)
+		public PagedResponseViewModel(int totalRecords, int pageNumer, int pageSize, List<T> results)
 		{
-			Results = new List<T>();
+			Results = results ?? new List<T>();
 			PageSize = pageSize;
 			TotalItems = totalRecords;
 			TotalPages = GetTotalPages();
@@ -18,7 +18,7 @@
 		}
 		private int GetTotalPages()
 		{
-			var totalPages = Convert.ToInt32(Math.Ceiling(((double)TotalItems / (double)PageSize)));
+			var totalPages = Convert.ToInt32(Math.Ceiling((double)TotalItems / (double)PageSize));
 			return totalPages == 0 ? 1 : totalPages;
 
 		}
