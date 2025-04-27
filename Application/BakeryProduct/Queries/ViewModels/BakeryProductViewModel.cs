@@ -4,6 +4,7 @@ namespace Application.BakeryProduct.Queries.ViewModels
 {
 	public class BakeryProductViewModel
 	{
+		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public decimal Price { get; set; }
@@ -12,8 +13,11 @@ namespace Application.BakeryProduct.Queries.ViewModels
 
 		public BakeryProductViewModel(Product search)
 		{
+			Id = search.Id;
 			Name = search.Name;
 			Description = search.Description;
+			Price = search.Price;
+			Stock = search.Stock;
 			CategoryId = search.CategoryId;
 		}
 	}

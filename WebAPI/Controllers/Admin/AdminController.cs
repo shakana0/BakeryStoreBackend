@@ -1,4 +1,7 @@
-﻿using Application.BakeryProduct.Commands.CreateBakeryProduct;
+﻿using Application.BakeryCategory.Commands.CreateBakeryCategory;
+using Application.BakeryCategory.Queries.GetBakeryCategory;
+using Application.BakeryCategory.Queries.ViewModels;
+using Application.BakeryProduct.Commands.CreateBakeryProduct;
 using Application.BakeryProduct.Commands.DeleteBakeryProduct;
 using Application.BakeryProduct.Commands.UpdateBakeryProduct;
 using Application.BakeryProduct.Queries.GetBakeryProduct;
@@ -56,5 +59,26 @@ namespace WebAPI.Controllers.Admin
 		{
 			return Ok(await Mediator.Send(command));
 		}
+
+		/*Category*/
+
+		[HttpGet("BakeryCategory/{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<BakeryCategoryViewModel>> GetBakeryCategory(int id)
+		{
+			return Ok(await Mediator.Send(new GetBakeryCategoryQuery() { Id = id }));
+		}
+
+
+		[HttpPost("BakeryCategory")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult<int>> CreateBakeryCatgory(CreateBakeryCategoryCommand command)
+		{
+			return Ok(await Mediator.Send(command));
+		}
+
 	}
 }
