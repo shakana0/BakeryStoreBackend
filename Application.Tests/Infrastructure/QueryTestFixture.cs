@@ -1,7 +1,5 @@
-using Application.Tests.Infrastructure;
 using AutoMapper;
 using Persistence;
-using System;
 using Xunit;
 
 namespace Application.Tests.Infrastructure
