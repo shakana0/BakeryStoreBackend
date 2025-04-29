@@ -1,4 +1,4 @@
-﻿using Application.BakeryProduct.Commands.UpdateBakeryProduct;
+﻿using Application.BakeryProduct.Commands.CreateBakeryProduct;
 using Application.Infrastructure.AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -12,7 +12,7 @@ namespace Application
 		public static IServiceCollection RegisterApplicationServices(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-			services.AddValidatorsFromAssemblyContaining<UpdateBakeryProductCommandValidator>();
+			services.AddValidatorsFromAssemblyContaining<CreateBakeryProductCommandValidator>();
 
 			services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 			return services;
