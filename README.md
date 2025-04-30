@@ -1,6 +1,6 @@
 # ☁️ Backend Web API – Built With ASP.NET Core & Clean Architecture
 
-This fullstack project focuses on building a well-structured, scalable API using ASP.NET Core, C#, and SQL Server. With an emphasis on clean code, architecture patterns, and testing, the project demonstrates how to create robust backend solutions ready for production environments.
+This backend project focuses on building a well-structured, scalable API using ASP.NET Core, C#, and SQL Server. With an emphasis on clean code, architecture patterns, and testing, the project demonstrates how to create robust backend solutions ready for production environments.
 
 ---
 
