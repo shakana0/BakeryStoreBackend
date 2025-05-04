@@ -1,10 +1,10 @@
 # ☁️ Backend Web API – Built With ASP.NET Core & Clean Architecture
 
-This backend project focuses on building a well-structured, scalable API using ASP.NET Core, C#, and SQL Server. With an emphasis on clean code, architecture patterns, and testing, the project demonstrates how to create robust backend solutions ready for production environments.
+This backend project focuses on building a well-structured, scalable API using **ASP.NET Core**, **C#**, **SQL Server**, secure, scalable, and cloud-integrated using **Azure**. With an emphasis on clean code, architecture patterns, and testing, the project demonstrates how to create robust backend solutions ready for production environments.
 
 ---
 
-## 🔍 Overview
+# 🔍 Overview
 
 This API handles:
 
@@ -12,6 +12,7 @@ This API handles:
 - Validation, versioning, and documentation of endpoints
 - Secure and maintainable backend logic
 - Scalable architecture using modern design patterns
+- **Cloud deployment** with Azure SQL and secure identity-based access
 
 ---
 
@@ -33,6 +34,8 @@ This project helped me:
 - Implement Swagger documentation and versioning for APIs
 - Write unit and integration tests with xUnit and mocking frameworks
 - Set up CI/CD pipelines using GitHub Actions
+- **Move a local SQL database to the Azure cloud and configure it for secure access using Microsoft Entra ID and `Microsoft.Data.SqlClient`**
+- **Access and manage the cloud database using SSMS and Azure CLI**
 
 ---
 
@@ -46,12 +49,14 @@ The API is built using the following tools and principles:
 - **Repository Pattern** – abstracting data access and improving testability
 - **AutoMapper** – mapping between domain models and view models
 - **FluentValidation** – handling request validation cleanly and declaratively
+- **Microsoft Entra ID (Azure AD)** – for secure authentication when connecting to the database
+- **Microsoft.Data.SqlClient** – for identity-based access to Azure SQL
 
 ---
 
 ## 🧱 Database & Schema
 
-- **SQL Server** – relational DB used for structured data
+- **Azure SQL Database** – cloud-hosted relational database for scalability and reliability
 - Designed normalized schemas (e.g., `Product`, `Category`, `Ingredient`)
 - Managed schema updates and data integrity using EF Core migrations
 
@@ -79,6 +84,28 @@ The API is built using the following tools and principles:
 - **Git** for version control
 - **GitHub Actions** for CI/CD
 - Ready to deploy to cloud or on-prem environments
+
+---
+
+## 🚀 Getting Started
+
+To run this project locally:
+
+1. Clone the repository
+2. Log in to Azure via CLI:
+  `az login`
+3. Set up the database connection string using Microsoft Entra ID authentication.
+   `appsettings.json or appsettings.Development.json`
+4. Apply EF Core migrations:
+  `dotnet ef database update`
+5. Restore and build the API:
+  `dotnet restore` then `dotnet build`
+6. Run the API
+   `dotnet run`
+7. Access Swagger UI at https://localhost:<port>/swagger to explore the API.
+8. Run tests
+    `cd Application.Tests
+     dotnet test`
 
 ---
 
