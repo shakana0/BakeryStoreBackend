@@ -28,8 +28,8 @@ namespace Persistence
 				   .WithMany()
 				   .HasForeignKey(e => e.CategoryId)
 				   .OnDelete(DeleteBehavior.Restrict);
-			// Configures a relationship where each Product has one Category, and deleting a Category will not delete related Products.
-
+			builder.Property(p => p.Price)
+						  .HasPrecision(18, 2); // Precision: 18, Scale: 2
 			var builder1 = modelBuilder.Entity<Category>().ToTable("Category", "dbo");
 			builder1.HasKey(e => e.Id);
 
@@ -38,6 +38,8 @@ namespace Persistence
 
 			var builder3 = modelBuilder.Entity<ProductIngredient>().ToTable("ProductIngredient", "dbo");
 			builder3.HasKey(e => e.Id);
+			builder3.Property(p => p.Quantity)
+			  .HasPrecision(18, 2); // Precision: 18, Scale: 2
 		}
 
 	}

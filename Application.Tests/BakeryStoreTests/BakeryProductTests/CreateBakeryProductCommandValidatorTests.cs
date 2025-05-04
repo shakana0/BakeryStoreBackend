@@ -17,14 +17,36 @@ namespace Application.BakeryProduct.Tests
         public void CreateBakeryProductCommandValidator_WithoutRequiredFields_ShouldGiveValidationErrors()
         {
             // Arrange
-            var command = new CreateBakeryProductCommand();
+            var command = new CreateBakeryProductCommand
+            {
+                Name = "",
+                Description = "Test Description",
+            };
             // Act
             var result = _validator.TestValidate(command);
             // Assert
             result.ShouldHaveValidationErrorFor(x => x.Name);
-            result.ShouldHaveValidationErrorFor(x => x.Description);
             result.ShouldHaveValidationErrorFor(x => x.Price);
             result.ShouldHaveValidationErrorFor(x => x.CategoryId);
+        }
+
+        [Fact]
+        public void CreateBakeryProductCommandValidator_WithEmptyDescription_ShouldGiveValidationError()
+        {
+            // Arrange
+            var command = new CreateBakeryProductCommand
+            {
+                Name = "Valid Name",
+                Description = "", // Invalid: Description is empty
+                Price = 10.0m,
+                CategoryId = 1
+            };
+
+            // Act
+            var result = _validator.TestValidate(command);
+
+            // Assert
+            result.ShouldHaveValidationErrorFor(x => x.Description); // Description is required
         }
 
         [Fact]

@@ -11,7 +11,9 @@ namespace WebAPI.Controllers
 	{
 		//The Mediator property is used to get an instance of IMediator from the dependency injection container. This is done lazily
 		//meaning the instance is only created when it’s first needed.
-		private IMediator _mediator;
-		protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>(); //property that returns the Mediator instance. If the instance is null, it creates a new instance using the RequestServices property of the HttpContext.
+		private IMediator? _mediator;
+		protected IMediator Mediator => _mediator ??=
+		HttpContext.RequestServices.GetService<IMediator>()
+		?? throw new InvalidOperationException("IMediator service is not registered.");
 	}
 }

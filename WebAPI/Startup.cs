@@ -28,7 +28,7 @@ namespace WebAPI
 								   // Register the database context
 			services.AddDbContext<BakeryStoreDbContext>(options =>
 			{
-				options.UseSqlServer(Configuration.GetConnectionString("BakeryStoreDb"));
+				options.UseSqlServer(Configuration.GetConnectionString("BakeryStoreDbAzure"));
 			});
 			services.AddControllers(); // Register the controllers
 			services.AddEndpointsApiExplorer(); // To register services that provide metadata about your API endpoints and is needed for the OpenAPI document

@@ -6,9 +6,9 @@
 		public int ProductId { get; set; }
 		public int IngredientId { get; set; }
 		public decimal Quantity { get; set; }
-		public string Unit { get; set; }
-		public string Description { get; set; }
-		public Product Product { get; set; }
-		public Ingredient Ingredient { get; set; }
+		public required string Unit { get; set; }
+		public required string Description { get; set; }
+		public required Product Product { get; set; }
+		public required Ingredient Ingredient { get; set; }
 	}
 }
