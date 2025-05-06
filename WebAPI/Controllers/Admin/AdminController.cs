@@ -5,6 +5,8 @@ using Application.BakeryCategory.Queries.GetBakeryCategory;
 using Application.BakeryCategory.Queries.ViewModels;
 using Application.BakeryIngredient.Commands.CreateBakeryIngredient;
 using Application.BakeryIngredient.Commands.DeleteBakeryIngredient;
+using Application.BakeryIngredient.Queries.GetBakeryIngredient;
+using Application.BakeryIngredient.Queries.ViewModels;
 using Application.BakeryProduct.Commands.CreateBakeryProduct;
 using Application.BakeryProduct.Commands.DeleteBakeryProduct;
 using Application.BakeryProduct.Commands.UpdateBakeryProduct;
@@ -101,6 +103,15 @@ namespace WebAPI.Controllers.Admin
 		}
 
 		/*Ingredient*/
+
+		[HttpGet("BakeryIngredient/{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<BakeryIngredientViewModel>> GetBakeryIngredient(int id)
+		{
+			return Ok(await Mediator.Send(new GetBakeryIngredientQuery() { Id = id }));
+		}
 
 		[HttpPost("BakeryIngredient")]
 		[Produces("application/json")]

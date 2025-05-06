@@ -26,6 +26,7 @@ namespace Application.Infrastructure.AutoMapper
 
 			//Ingredient mappings
 			CreateMap<CreateBakeryIngredientCommand, Ingredient>();
+			CreateMap<Ingredient, CreateBakeryIngredientCommand>();
 		}
 	}
 }

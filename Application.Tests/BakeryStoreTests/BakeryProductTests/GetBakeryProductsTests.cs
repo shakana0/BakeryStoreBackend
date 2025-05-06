@@ -8,12 +8,12 @@ namespace Application.Tests.BakeryProductTests
 {
 
     [Collection("QueryCollection")]
-    public class GetBakeryProductsQueryTests
+    public class GetBakeryProductsTests
     {
         private readonly IMapper _mapper;
         private readonly BakeryStoreDbContext _bakeryStoreDbContext;
 
-        public GetBakeryProductsQueryTests(QueryTestFixture queryTestFixture)
+        public GetBakeryProductsTests(QueryTestFixture queryTestFixture)
         {
             _mapper = queryTestFixture.Mapper;
             _bakeryStoreDbContext = queryTestFixture.Context;
