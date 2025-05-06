@@ -20,7 +20,9 @@ namespace Application.BakeryCategory.Queries.GetBakeryCategory
 
         public async Task<BakeryCategoryViewModel> Handle(GetBakeryCategoryQuery request, CancellationToken cancellationToken)
         {
-            var bakeryCategory = await _bakeryStoreDbContext.Categories.FirstOrDefaultAsync(category => category.Id == request.Id, cancellationToken); // getting the category from the database context.
+            var bakeryCategory = await _bakeryStoreDbContext.Categories
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(category => category.Id == request.Id, cancellationToken); // getting the category from the database context.
             if (bakeryCategory == null) // if the category is not found, throw an exception.
             {
                 throw new NotFoundException("Category", $"{request.Id}");

@@ -3,6 +3,7 @@ using Application.Common.Extension;
 using Application.Common.ViewModel;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.BakeryProduct.Queries.SearchBakeryProduct
@@ -18,7 +19,9 @@ namespace Application.BakeryProduct.Queries.SearchBakeryProduct
 
 		public async Task<PagedResponseViewModel<BakeryProductViewModel>> Handle(SearchBakeryProductQuery request, CancellationToken cancellationToken)
 		{
-			IQueryable<Product> query = _bakeryStoreDbContext.Products.AsQueryable();
+			IQueryable<Product> query = _bakeryStoreDbContext.Products
+					.AsNoTracking()
+					.AsQueryable();
 
 			if (!string.IsNullOrEmpty(request.Name))
 			{

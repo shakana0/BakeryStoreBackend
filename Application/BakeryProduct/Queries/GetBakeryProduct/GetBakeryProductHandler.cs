@@ -20,7 +20,9 @@ namespace Application.BakeryProduct.Queries.GetBakeryProduct
 
 		public async Task<BakeryProductViewModel> Handle(GetBakeryProductQuery request, CancellationToken cancellationToken)
 		{
-			var bakeryProduct = await _bakeryStoreDbContext.Products.FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken); // getting the product from the database context.
+			var bakeryProduct = await _bakeryStoreDbContext.Products
+					.AsNoTracking() // Disable change tracking for better performance
+					.FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken); // getting the product from the database context.
 			if (bakeryProduct == null) // if the product is not found, throw an exception.
 			{
 				throw new NotFoundException("Product", $"{request.Id}");
