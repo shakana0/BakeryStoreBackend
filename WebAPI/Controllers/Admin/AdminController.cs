@@ -3,6 +3,7 @@ using Application.BakeryCategory.Commands.DeleteBakeryCategory;
 using Application.BakeryCategory.Commands.UpdateBakeryCategory;
 using Application.BakeryCategory.Queries.GetBakeryCategory;
 using Application.BakeryCategory.Queries.ViewModels;
+using Application.BakeryIngredient.Commands.CreateBakeryIngredient;
 using Application.BakeryProduct.Commands.CreateBakeryProduct;
 using Application.BakeryProduct.Commands.DeleteBakeryProduct;
 using Application.BakeryProduct.Commands.UpdateBakeryProduct;
@@ -73,7 +74,6 @@ namespace WebAPI.Controllers.Admin
 			return Ok(await Mediator.Send(new GetBakeryCategoryQuery() { Id = id }));
 		}
 
-
 		[HttpPost("BakeryCategory")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
@@ -89,12 +89,23 @@ namespace WebAPI.Controllers.Admin
 		{
 			return Ok(await Mediator.Send(new DeleteBakeryCategoryCommand() { Id = id }));
 		}
+
 		[HttpPatch("BakeryCategory/{id}")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<ActionResult<int>> UpdateBakeryCategory(int id, UpdateBakeryCategoryCommand command)
 		{
 			command.SetBakeryCategoryId(id);
+			return Ok(await Mediator.Send(command));
+		}
+
+		/*Ingredient*/
+
+		[HttpPost("BakeryIngredient")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult<int>> CreateBakeryIngredient(CreateBakeryIngredientCommand command)
+		{
 			return Ok(await Mediator.Send(command));
 		}
 	}

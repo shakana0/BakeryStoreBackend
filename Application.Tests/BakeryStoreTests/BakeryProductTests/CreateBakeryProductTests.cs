@@ -20,7 +20,7 @@ namespace Application.Tests.BakeryProductTests
         }
 
         [Fact]
-        public async Task CreateBakeryProduct_BakeryProductsExists_ShouldReturnBakeryProductId()
+        public async Task CreateBakeryProduct_BakeryProductExists_ShouldReturnBakeryProductId()
         {
             // Arrange
             var handler = new CreateBakeryProductHandler(_bakeryStoreDbContext, _mapper);
