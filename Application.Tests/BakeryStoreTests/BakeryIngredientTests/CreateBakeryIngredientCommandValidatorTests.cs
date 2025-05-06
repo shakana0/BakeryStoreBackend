@@ -3,7 +3,6 @@ using FluentValidation.TestHelper;
 using Xunit;
 namespace Application.Tests.BakeryStoreTests.BakeryIngredientTests
 {
-    [Collection("QueryCollection")]
     public class CreateBakeryIngredientCommandValidatorTests
     {
         private readonly CreateBakeryIngredientCommandvalidator _validator;

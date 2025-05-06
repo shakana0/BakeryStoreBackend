@@ -4,7 +4,6 @@ using Application.BakeryProduct.Commands.CreateBakeryProduct;
 
 namespace Application.BakeryProduct.Tests
 {
-    [Collection("QueryCollection")]
     public class CreateBakeryProductCommandValidatorTests
     {
         private CreateBakeryProductCommandValidator _validator;
@@ -14,7 +13,7 @@ namespace Application.BakeryProduct.Tests
         }
 
         [Fact]
-        public void CreateBakeryProductCommandValidator_WithoutRequiredFields_ShouldGiveValidationErrors()
+        public void CreateBakeryProductCommandValidator_WithEmptyName_ShouldGiveValidationErrors()
         {
             // Arrange
             var command = new CreateBakeryProductCommand

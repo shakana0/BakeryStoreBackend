@@ -14,8 +14,9 @@ namespace Application.Tests.Infrastructure
             var context = new BakeryStoreDbContext(options);
 
             var bakeryProducts = DataProvider.GetBakeryProducts();
+            var bakeryIngredients = DataProvider.GetBakeryIngredients();
             context.Products.AddRange(bakeryProducts);
-
+            context.Ingredients.AddRange(bakeryIngredients);
 
             context.SaveChanges();
 

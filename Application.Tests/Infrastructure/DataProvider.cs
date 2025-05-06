@@ -48,5 +48,35 @@ namespace Application.Tests.Infrastructure
                 CategoryId = 5,
             }};
         }
+        public static List<Ingredient> GetBakeryIngredients()
+        {
+            return new List<Ingredient> {
+                new Ingredient() {
+                    Id = 1,
+                    Name = "Flour",
+                    Allergens = "Gluten"
+                },
+                new Ingredient() {
+                    Id = 2,
+                    Name = "Sugar",
+                    Allergens = "None"
+                },
+                new Ingredient() {
+                    Id = 3,
+                    Name = "Eggs",
+                    Allergens = "Egg"
+                },
+                new Ingredient() {
+                    Id = 4,
+                    Name = "Milk",
+                    Allergens = "Dairy"
+                },
+                new Ingredient() {
+                    Id = 5,
+                    Name = "Butter",
+                    Allergens = "Dairy"
+                }
+            };
+        }
     }
 }

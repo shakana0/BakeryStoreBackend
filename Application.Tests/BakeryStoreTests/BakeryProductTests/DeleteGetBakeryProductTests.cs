@@ -16,7 +16,7 @@ namespace Application.Tests.BakeryStoreTests
         }
 
         [Fact]
-        public async Task DeleteBakeryProduct_BakeryProductsExists_ReturnsRedirectToIndex()
+        public async Task DeleteBakeryProduct_BakeryProductsExists_ShouldRemoveProductFromDatabase()
         {
             // Arrange
             var bakeryProduct = _bakeryStoreDbContext.Products.FirstOrDefault();
