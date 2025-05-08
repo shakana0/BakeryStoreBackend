@@ -14,6 +14,9 @@ using Application.BakeryProduct.Commands.UpdateBakeryProduct;
 using Application.BakeryProduct.Queries.GetBakeryProduct;
 using Application.BakeryProduct.Queries.SearchBakeryProduct;
 using Application.BakeryProduct.Queries.ViewModels;
+using Application.BakeryProductIngredient.Commands.CreateBakeryProductIngredient;
+using Application.BakeryProductIngredient.Queries.GetBakeryProductIngredient;
+using Application.BakeryProductIngredient.Queries.ViewModels;
 using Application.Common.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -137,6 +140,24 @@ namespace WebAPI.Controllers.Admin
 		{
 			command.SetBakeryIngredientId(id);
 			return Ok(await Mediator.Send(command));
+		}
+
+		//ProductIngredient
+		[HttpPost("BakeryProductIngredient")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult<int>> CreateBakeryProductIngredient(CreateBakeryProductIngredientCommand command)
+		{
+			return Ok(await Mediator.Send(command));
+		}
+
+		[HttpGet("BakeryProductIngredient/{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<BakeryProductIngredientViewModel>> GetBakeryProductIngredient(int id)
+		{
+			return Ok(await Mediator.Send(new GetBakeryProductIngredientQuery() { Id = id }));
 		}
 	}
 }

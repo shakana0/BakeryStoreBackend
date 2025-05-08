@@ -8,7 +8,7 @@
 		public decimal Quantity { get; set; }
 		public required string Unit { get; set; }
 		public required string Description { get; set; }
-		public required Product Product { get; set; }
-		public required Ingredient Ingredient { get; set; }
+		public required Product Product { get; set; } //Navigation property to Product
+		public required Ingredient Ingredient { get; set; } //Navigation property to Ingredient
 	}
 }

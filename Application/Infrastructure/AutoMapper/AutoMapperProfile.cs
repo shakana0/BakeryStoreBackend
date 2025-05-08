@@ -4,6 +4,7 @@ using Application.BakeryIngredient.Commands.CreateBakeryIngredient;
 using Application.BakeryProduct.Commands.CreateBakeryProduct;
 using Application.BakeryProduct.Commands.UpdateBakeryProduct;
 using Application.BakeryProduct.Queries.ViewModels;
+using Application.BakeryProductIngredient.Commands.CreateBakeryProductIngredient;
 using AutoMapper;
 using Domain;
 
@@ -27,6 +28,13 @@ namespace Application.Infrastructure.AutoMapper
 			//Ingredient mappings
 			CreateMap<CreateBakeryIngredientCommand, Ingredient>();
 			CreateMap<Ingredient, CreateBakeryIngredientCommand>();
+
+			//ProductIngredient mappings
+			CreateMap<CreateBakeryProductIngredientCommand, ProductIngredient>()
+				.ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+				.ForMember(dest => dest.IngredientId, opt => opt.MapFrom(src => src.IngredientId));
+
+			CreateMap<ProductIngredient, CreateBakeryProductIngredientCommand>();
 		}
 	}
 }
