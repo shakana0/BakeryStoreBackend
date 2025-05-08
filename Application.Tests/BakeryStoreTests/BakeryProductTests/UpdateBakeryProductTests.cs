@@ -41,7 +41,6 @@ namespace Application.Tests.BakeryProductTests
             var result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            // var UpdateBakeryProduct = _bakeryStoreDbContext.Products.FirstOrDefault(x => x.Id == bakeryProduct.Id);
             Assert.NotNull(result);
             Assert.Equal(bakeryProduct.Id, result.Id);
             Assert.Equal(bakeryProduct.Name, result.Name);
