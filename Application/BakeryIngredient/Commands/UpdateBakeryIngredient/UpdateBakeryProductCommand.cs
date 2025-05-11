@@ -7,7 +7,7 @@ namespace Application.BakeryIngredient.UpdateBakeryIngredient
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public required string Allergens { get; set; }
+        public string? Allergens { get; set; }
         public void SetBakeryIngredientId(int id) => Id = id;
     }
 }

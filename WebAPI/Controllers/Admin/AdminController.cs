@@ -12,9 +12,12 @@ using Application.BakeryProduct.Commands.CreateBakeryProduct;
 using Application.BakeryProduct.Commands.DeleteBakeryProduct;
 using Application.BakeryProduct.Commands.UpdateBakeryProduct;
 using Application.BakeryProduct.Queries.GetBakeryProduct;
+using Application.BakeryProduct.Queries.GetBakeryProductDetails;
 using Application.BakeryProduct.Queries.SearchBakeryProduct;
 using Application.BakeryProduct.Queries.ViewModels;
 using Application.BakeryProductIngredient.Commands.CreateBakeryProductIngredient;
+using Application.BakeryProductIngredient.Commands.DeleteBakeryProductIngredient;
+using Application.BakeryProductIngredient.Commands.UpdatebakeryProductIngredient;
 using Application.BakeryProductIngredient.Queries.GetBakeryProductIngredient;
 using Application.BakeryProductIngredient.Queries.ViewModels;
 using Application.Common.ViewModel;
@@ -158,6 +161,36 @@ namespace WebAPI.Controllers.Admin
 		public async Task<ActionResult<BakeryProductIngredientViewModel>> GetBakeryProductIngredient(int id)
 		{
 			return Ok(await Mediator.Send(new GetBakeryProductIngredientQuery() { Id = id }));
+		}
+
+		[HttpDelete("BakeryProductIngredient/{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<int>> DeleteBakeryProductIngredient(int id)
+		{
+			return Ok(await Mediator.Send(new DeleteBakeryProductIngredientCommand() { Id = id }));
+		}
+
+		[HttpPatch("BakeryProductIngredient/{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<int>> UpdateBakeryProductIngredient(int id, UpdateBakeryProductIngredientCommand command)
+		{
+			command.SetBakeryProductIngredientId(id);
+			return Ok(await Mediator.Send(command));
+		}
+
+
+		//ProductDetails
+		[HttpGet("BakeryProductDetails/{id}")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<BakeryProductDetailsViewModel>> GetBakeryProductDetails(int id)
+		{
+			return Ok(await Mediator.Send(new GetBakeryProductDetailsQuery() { ProductId = id }));
 		}
 	}
 }

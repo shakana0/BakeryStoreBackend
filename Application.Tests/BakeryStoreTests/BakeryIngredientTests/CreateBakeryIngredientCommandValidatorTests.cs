@@ -15,10 +15,9 @@ namespace Application.Tests.BakeryStoreTests.BakeryIngredientTests
         [Fact]
         public void CreateBakeryIngredientCommandValidator_WithoutRequiredFields_ShouldGiveValidationErrors()
         {
-            var command = new CreateBakeryIngredientCommand { Name = string.Empty, Allergens = string.Empty };
+            var command = new CreateBakeryIngredientCommand { Name = string.Empty };
             var result = _validator.TestValidate(command);
             result.ShouldHaveValidationErrorFor(x => x.Name);
-            result.ShouldHaveValidationErrorFor(x => x.Allergens);
         }
     }
 }

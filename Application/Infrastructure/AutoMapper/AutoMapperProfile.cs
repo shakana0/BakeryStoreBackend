@@ -35,6 +35,13 @@ namespace Application.Infrastructure.AutoMapper
 				.ForMember(dest => dest.IngredientId, opt => opt.MapFrom(src => src.IngredientId));
 
 			CreateMap<ProductIngredient, CreateBakeryProductIngredientCommand>();
+			CreateMap<CreateBakeryProductIngredientCommand, ProductIngredient>();
+
+			//ProductDetails mappings
+			// CreateMap<Product, BakeryProductDetailsViewModel>()
+			// .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+			// .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.ProductIngredients.Select(pi => pi.Ingredient)))
+			// .ForMember(dest => dest.ProductIngredients, opt => opt.MapFrom(src => src.ProductIngredients));
 		}
 	}
 }

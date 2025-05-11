@@ -7,7 +7,15 @@ namespace Application.BakeryIngredient.Commands.CreateBakeryIngredient
         public CreateBakeryIngredientCommandvalidator()
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required.");
-            RuleFor(x => x.Allergens).NotEmpty().WithMessage("Allergens are required.");
+            // Normalize Allergens
+            RuleFor(x => x.Allergens)
+                .Custom((value, context) =>
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        context.InstanceToValidate.Allergens = null;
+                    }
+                });
         }
     }
 }
