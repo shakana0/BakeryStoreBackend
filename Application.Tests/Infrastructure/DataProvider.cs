@@ -78,5 +78,31 @@ namespace Application.Tests.Infrastructure
                 }
             };
         }
+        public static List<Category> GetBakeryCategories()
+        {
+            return new List<Category>{
+                new Category() {
+                    Id = 1,
+                    Name = "Bread"
+                },
+                new Category() {
+                    Id = 2,
+                    Name = "Pastry"
+                },
+                new Category() {
+                    Id = 3,
+                    Name = "Cake"
+                },
+                new Category() {
+                    Id = 4,
+                    Name = "Cookies"
+                },
+                new Category() {
+                    Id = 5,
+                    Name = "Muffins"
+                }
+            };
+        }
+
     }
 }

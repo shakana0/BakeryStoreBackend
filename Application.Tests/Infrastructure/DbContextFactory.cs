@@ -15,8 +15,10 @@ namespace Application.Tests.Infrastructure
 
             var bakeryProducts = DataProvider.GetBakeryProducts();
             var bakeryIngredients = DataProvider.GetBakeryIngredients();
+            var bakeryCategory = DataProvider.GetBakeryCategories();
             context.Products.AddRange(bakeryProducts);
             context.Ingredients.AddRange(bakeryIngredients);
+            context.Categories.AddRange(bakeryCategory);
 
             context.SaveChanges();
 
