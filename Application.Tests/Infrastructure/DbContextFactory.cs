@@ -16,11 +16,14 @@ namespace Application.Tests.Infrastructure
             var bakeryProducts = DataProvider.GetBakeryProducts();
             var bakeryIngredients = DataProvider.GetBakeryIngredients();
             var bakeryCategory = DataProvider.GetBakeryCategories();
+            var bakeryProductIngredient = DataProvider.GetBakeryProductIngredients();
             context.Products.AddRange(bakeryProducts);
             context.Ingredients.AddRange(bakeryIngredients);
             context.Categories.AddRange(bakeryCategory);
+            context.ProductIngredients.AddRange(bakeryProductIngredient);
 
             context.SaveChanges();
+            context.ChangeTracker.Clear();
 
             return context;
         }

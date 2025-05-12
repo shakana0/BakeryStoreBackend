@@ -103,6 +103,26 @@ namespace Application.Tests.Infrastructure
                 }
             };
         }
-
+        public static List<ProductIngredient> GetBakeryProductIngredients()
+        {
+            return new List<ProductIngredient> {
+                new ProductIngredient() {
+                    Id = 1,
+                    ProductId = 1,
+                    IngredientId = 1,
+                    Quantity = 2,
+                    Unit = "kg",
+                    Description = "Flour for bread",
+                },
+                new ProductIngredient() {
+                    Id = 2,
+                    ProductId = 2,
+                    IngredientId = 2,
+                    Quantity = 1,
+                    Unit = "kg",
+                    Description = "Sugar for cookies",
+                }
+            };
+        }
     }
 }
