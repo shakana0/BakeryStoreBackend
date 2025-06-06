@@ -11,7 +11,6 @@ namespace Application.BakeryProduct.Queries.SearchBakeryProduct
 	public class SearchBakeryProductHandler : IRequestHandler<SearchBakeryProductQuery, PagedResponseViewModel<BakeryProductViewModel>>
 	{
 		private readonly BakeryStoreDbContext _bakeryStoreDbContext;
-
 		public SearchBakeryProductHandler(BakeryStoreDbContext bakeryStoreDbContext)
 		{
 			_bakeryStoreDbContext = bakeryStoreDbContext;

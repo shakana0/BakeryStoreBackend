@@ -10,9 +10,6 @@ public class BakeryProductDetailsViewModel
     public int Stock { get; set; }
     public required string Description { get; set; }
     public required BakeryCategoryViewModel Category { get; set; }
-    public required List<BakeryIngredientViewModel> Ingredients { get; set; }
-    public required List<BakeryProductIngredientViewModel> ProductIngredients
-    {
-        get; set;
-    }
+    public required List<BakeryIngredientViewModel> Ingredients { get; set; } = new List<BakeryIngredientViewModel>();
+    public required List<BakeryProductIngredientViewModel> ProductIngredients { get; set; } = new List<BakeryProductIngredientViewModel>();
 }

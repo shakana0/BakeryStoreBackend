@@ -5,8 +5,8 @@ namespace Application.BakeryIngredient.Queries.ViewModels
     public class BakeryIngredientViewModel
     {
         public int Id { get; set; }
-        public required string Name { get; set; }
-        public string? Allergens { get; set; }
+        public required string Name { get; set; } = string.Empty;
+        public string? Allergens { get; set; } = string.Empty;
         public BakeryIngredientViewModel() { }
 
         public BakeryIngredientViewModel(Ingredient ingredient)

@@ -30,9 +30,9 @@ namespace Application.BakeryProduct.Queries.GetBakeryProductDetails
             //fetch the category seprately
             var category = await _bakeryStoreDbContext.Categories
                 .FirstOrDefaultAsync(c => c.Id == product.CategoryId, cancellationToken);
-            //fetch the product ingredients seprately
+
             var productIngredients = await _bakeryStoreDbContext.ProductIngredients
-                .Where(pi => pi.ProductId == request.ProductId)
+                .Where(pi => pi.ProductId == request.ProductId && pi.Ingredient != null) // Ensure Ingredient isn't null
                 .Include(pi => pi.Ingredient)
                 .ToListAsync(cancellationToken);
 
@@ -50,13 +50,14 @@ namespace Application.BakeryProduct.Queries.GetBakeryProductDetails
                 },
 
                 ProductIngredients = productIngredients.Select(pi => new BakeryProductIngredientViewModel(pi)).ToList(),
-
-                Ingredients = productIngredients.Select(pi => new BakeryIngredientViewModel
+                Ingredients = productIngredients
+                .Where(pi => pi.Ingredient != null)
+                .Select(pi => new BakeryIngredientViewModel
                 {
-                    Id = pi.Ingredient.Id,
-                    Name = pi.Ingredient.Name,
-                    Allergens = pi.Ingredient.Allergens
-                }).ToList(),
+                    Id = pi.Ingredient?.Id ?? 0,
+                    Name = pi.Ingredient?.Name ?? "Unknown",
+                    Allergens = pi.Ingredient?.Allergens ?? "Unknown"
+                }).ToList()
             };
         }
     }

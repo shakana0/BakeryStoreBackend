@@ -11,6 +11,8 @@ namespace Application.BakeryProductIngredient.Queries.ViewModels
         public string Unit { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
+        public BakeryProductIngredientViewModel() { } //Required for deserialization
+
         public BakeryProductIngredientViewModel(ProductIngredient productIngredient)
         {
             Id = productIngredient.Id;

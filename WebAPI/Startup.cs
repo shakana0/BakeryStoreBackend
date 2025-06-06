@@ -6,14 +6,16 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using WebAPI.Infrastructure.Swagger;
-
-
+using StackExchange.Redis;
+using WebAPI.Interfaces;
+using WebAPI.Repositories;
 
 namespace WebAPI
 {
 	public class Startup
 	{
 		public IConfiguration Configuration { get; }
+		public ConnectionMultiplexer? _redis = null;
 
 		public Startup(IConfiguration configuration)
 		{
@@ -48,6 +50,22 @@ namespace WebAPI
 				options.SubstituteApiVersionInUrl = true; //configures the application to include the API version in the URL
 			});
 			services.AddOpenApiDocument(Common.ApiVersion.ApiName, Common.ApiVersion.V1, Common.ApiVersion.V1UrlPath); // Register the OpenAPI document
+
+			var useAzure = Configuration.GetValue<bool>("Redis:UseAzure");
+			var redisHost = useAzure ? Configuration["Redis:HostName"] : Configuration["Redis:HostNameLocal"];
+			var redisPort = useAzure ? Configuration["Redis:Port"] : Configuration["Redis:PortLocal"];
+			var redisConnection = $"{redisHost}:{redisPort}";
+			var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnection);
+			// Register Redis ConnectionMultiplexer
+			services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnection));
+
+			// Configure Redis Cache
+			services.AddStackExchangeRedisCache(options =>
+			{
+				options.Configuration = redisConnection;
+				options.InstanceName = "BakeryStoreRedisInstance";
+			});
+			services.AddSingleton<IRedisCache, RedisCache>();
 		}
 		// define the Configure method
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

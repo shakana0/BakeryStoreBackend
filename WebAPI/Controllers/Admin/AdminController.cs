@@ -22,19 +22,42 @@ using Application.BakeryProductIngredient.Queries.GetBakeryProductIngredient;
 using Application.BakeryProductIngredient.Queries.ViewModels;
 using Application.Common.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using StackExchange.Redis;
+using WebAPI.Interfaces;
 
 namespace WebAPI.Controllers.Admin
 {
 	public class AdminController : BaseController
 	{
+		private readonly IRedisCache _redisCache;
+		private readonly ILogger<AdminController> _logger;
+
+		public AdminController(IRedisCache redisCache, ILogger<AdminController> logger)
+		{
+			_redisCache = redisCache;
+			_logger = logger;
+		}
+
 		[HttpGet("BakeryProduct/{id}")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult<BakeryProductViewModel>> GetBakeryProduct(int id)
 		{
-			return Ok(await Mediator.Send(new GetBakeryProductQuery() { Id = id }));
+			var cacheKey = $"BakeryProduct_{id}";
+
+			// Check if the product is already cached
+			var cachedData = await _redisCache.GetCacheData<BakeryProductViewModel>(cacheKey);
+			if (cachedData is not null) return Ok(cachedData);
+
+			// 🔹 Fetch the product from the database if not cached
+			var result = await Mediator.Send(new GetBakeryProductQuery() { Id = id });
+
+			// Cache the result for faster future requests
+			await _redisCache.SetCacheData(cacheKey, result, DateTimeOffset.UtcNow.AddMinutes(10));
+			return Ok(result);
 		}
+
 
 		[HttpPost("BakeryProduct")] // attribute specifies that this method will handle HTTP POST requests sent to the BakeryProduct endpoint.
 		[Produces("application/json")] //attribute indicates that this method will return JSON-formatted responses.
@@ -70,7 +93,31 @@ namespace WebAPI.Controllers.Admin
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> SearchBakeryProduct([FromQuery] SearchBakeryProductQuery command)
 		{
-			return Ok(await Mediator.Send(command));
+			try
+			{
+				var cacheKey = $"BakeryProduct_{command.Name ?? "default"}_{command.Description ?? "default"}_{command.CategoryId?.ToString() ?? "default"}_{command.PageNumber}_{command.PageSize}";
+				var cachedData = await _redisCache.GetCacheData<PagedResponseViewModel<BakeryProductViewModel>>(cacheKey);
+				if (cachedData is not null) return Ok(cachedData);
+
+				var result = await Mediator.Send(command);
+
+				await _redisCache.SetCacheData(cacheKey, result, DateTimeOffset.UtcNow.AddMinutes(5));
+
+				return Ok(result);
+			}
+			//If Redis fails, the API fetches fresh data instead of breaking.
+			catch (RedisConnectionException ex)
+			{
+				Console.WriteLine($"Redis Error: {ex.Message}");
+				// Continue without Redis, only return fresh DB results
+				return Ok(await Mediator.Send(command));
+			}
+			//if another unexpected error return generic error message
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Unexpected Error: {ex.Message}");
+				return BadRequest("Something went wrong.");
+			}
 		}
 
 		/*Category*/
@@ -181,16 +228,51 @@ namespace WebAPI.Controllers.Admin
 			command.SetBakeryProductIngredientId(id);
 			return Ok(await Mediator.Send(command));
 		}
-
-
 		//ProductDetails
+
 		[HttpGet("BakeryProductDetails/{id}")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult<BakeryProductDetailsViewModel>> GetBakeryProductDetails(int id)
 		{
-			return Ok(await Mediator.Send(new GetBakeryProductDetailsQuery() { ProductId = id }));
+			try
+			{
+				var cacheKey = $"BakeryProduct_{id}";
+				var cachedData = await _redisCache.GetCacheData<BakeryProductDetailsViewModel>(cacheKey);
+				if (cachedData is not null)
+				{
+					return Ok(cachedData);
+				}
+				// Fetch fresh data
+				var result = await Mediator.Send(new GetBakeryProductDetailsQuery { ProductId = id });
+				// Cache the fresh data
+				await _redisCache.SetCacheData(cacheKey, result, DateTimeOffset.UtcNow.AddMinutes(10));
+
+				return Ok(result);
+			}
+			catch (RedisConnectionException ex)
+			{
+				_logger.LogError($"Redis Error: {ex.Message}");
+
+				// Return fresh data if Redis fails
+				var result = await Mediator.Send(new GetBakeryProductDetailsQuery { ProductId = id });
+				return Ok(result);
+			}
+			catch (RedisTimeoutException ex)
+			{
+				_logger.LogError($"Redis Timeout: {ex.Message}");
+
+				// Return fresh data if Redis times out
+				var result = await Mediator.Send(new GetBakeryProductDetailsQuery { ProductId = id });
+				return Ok(result);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError($"Unexpected Error: {ex.Message}");
+				return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
+			}
 		}
+
 	}
 }
