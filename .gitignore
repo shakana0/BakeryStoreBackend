@@ -6,6 +6,12 @@
 # dotenv files
 .env
 
+# Redis CLI files
+redis-7.0.0/
+
+#webapi.zip
+webapi.zip
+
 # User-specific files
 *.rsuser
 *.suo
