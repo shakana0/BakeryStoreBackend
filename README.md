@@ -15,12 +15,20 @@ This API handles:
 - **Cloud deployment** with Azure SQL and secure identity-based access
 
 ---
-
 ## 📊 Architecture Overview
 
 The diagram below illustrates the structure of the backend application, following a clean architecture and CQRS pattern.
 
 <img src="./assets/backend-diagram.jpg" width="400" alt="Backend Architecture Diagram" />
+
+---
+## 🍰 Database Schema Overview
+
+The diagram below illustrates the BakeryStoreBackend data model, showing how products, categories, and ingredients are related through a normalized relational structure.
+
+<img src="./assets/bakeryStoreBackend-SQL-erdiagram.png" width="500" alt="ER diagram showing relationships between Category, Product, Ingredient, and ProductIngredient" />
+
+It helps visualize the many-to-many relationship between Product and Ingredient via the ProductIngredient table, and the one-to-many relationship between Category and Product.
 
 ---
 
